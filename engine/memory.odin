@@ -22,14 +22,14 @@ Memory_Stats :: struct {
 }
 
 memory_tag_strings: [max(Memory_Tag)]string = {
-	"Unknown    ",
-	"Array      ",
-	"Dynamic    ",
-	"String     ",
-	"Application",
-	"Renderer   ",
-	"Game       ",
-	"Scene      ",
+	"Unknown    : ",
+	"Array      : ",
+	"Dynamic    : ",
+	"String     : ",
+	"Application: ",
+	"Renderer   : ",
+	"Game       : ",
+	"Scene      : ",
 }
 
 stats: Memory_Stats
@@ -90,7 +90,7 @@ memory_set :: proc(dest: rawptr, value: u8, size: u64) {
 	mem.set(dest, value, int(size))
 }
 
-get_memory_usage_string :: proc() -> string {
+memory_log_usage_string :: proc() {
 	KIB: u64 : 1024
 	MIB: u64 : KIB * KIB
 	GIB: u64 : MIB * KIB
@@ -132,7 +132,9 @@ get_memory_usage_string :: proc() -> string {
 		}
 	}
 
-	out_string := strings.to_string(sb)
+	memory_usage := strings.to_string(sb)
 
-	return out_string
+	log_trace(memory_usage)
+
+	strings.builder_destroy(&sb)
 }

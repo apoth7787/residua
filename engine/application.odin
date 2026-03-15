@@ -71,6 +71,7 @@ application_create :: proc(game_inst: ^Game) -> b8 {
 }
 
 application_run :: proc() -> b8 {
+	memory_log_usage_string()
 	for app_state.is_running {
 		if platform.platform_pump_messages(&app_state.platform) {
 			app_state.is_running = false
