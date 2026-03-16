@@ -134,7 +134,7 @@ memory_log_usage_string :: proc() {
 
 	memory_usage := strings.to_string(sb)
 
-	log_trace(memory_usage)
+	log_info(memory_usage)
 
 	strings.builder_destroy(&sb)
 }
