@@ -47,6 +47,13 @@ application_create :: proc(game_inst: ^Game) -> b8 {
 	app_state.is_running = true
 	app_state.is_suspended = false
 
+	if !event_initialize() {
+		log_error("Event system failed initialization. Application can not continue")
+		return false
+	} else {
+		log_trace("Event sybsystem initialize")
+	}
+
 	if !platform.platform_startup(
 		&app_state.platform,
 		game_inst.app_config.name,
@@ -91,6 +98,8 @@ application_run :: proc() -> b8 {
 	}
 
 	app_state.is_running = false
+
+	event_shutdown()
 
 	platform.platform_shutdown(&app_state.platform)
 
